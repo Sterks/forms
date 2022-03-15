@@ -1,0 +1,5 @@
+mongo:
+  user: user
+  password: password
+  db_name: regExpo
+  port: 27017
