@@ -1,5 +1,12 @@
 mongo:
+  url: mongodb://mongodb:27017
   user: user
   password: password
-  db_name: regExpo
+  db_name: linkage
   port: 27017
+
+http:
+  port: 8000
+  maxHeaderBytes: 1
+  readTimeout: 10s
+  writeTimeout: 10s
