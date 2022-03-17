@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"forms/pkg/logger"
 	"time"
 
@@ -31,17 +32,17 @@ type (
 )
 
 func Init(configDir string) (*Config, error) {
+	var cfg *Config
 	// viper.SetConfigFile("../../configs/main.yml")
-	viper.SetConfigFile("/configs/main.yml")
-	err := viper.ReadInConfig()
-	if err != nil {
-		return nil, err
+	viper.SetConfigFile("configs/main.yml")
+
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("Fatal error config file: %w \n", err))
 	}
 
-	var conf *Config
-
-	if err := viper.Unmarshal(&conf); err != nil {
-		logger.Error(err)
+	if err2 := viper.Unmarshal(&cfg); err2 != nil {
+		logger.Errorf("Не могу сдалать Unmarshal для конфигурационного файла - %v", err2)
+		return nil, err2
 	}
-	return conf, err
+	return cfg, nil
 }

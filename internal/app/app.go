@@ -20,7 +20,7 @@ import (
 func Run(configPath string) {
 	cfg, err := config.Init(configPath)
 	if err != nil {
-		logger.Error(err)
+		logger.Errorf("не могу подулючиться %v", err)
 		return
 	}
 

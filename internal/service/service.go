@@ -17,12 +17,12 @@ type ClientInput struct {
 	Email      string
 }
 
-type ClientService interface {
+type Clients interface {
 	Create(ctx context.Context, client ClientInput) (primitive.ObjectID, error)
 }
 
 type Services struct {
-	ClientService ClientService
+	Clients Clients
 }
 
 type Deps struct {
@@ -30,5 +30,8 @@ type Deps struct {
 }
 
 func NewServices(deps Deps) *Services {
-	return &Services{}
+	clientService := NewClientService(deps.Repos.Clients)
+	return &Services{
+		Clients: clientService,
+	}
 }

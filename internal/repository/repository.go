@@ -8,16 +8,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type Client interface {
+type Clients interface {
 	Create(ctx context.Context, info domain.Client) (primitive.ObjectID, error)
 }
 
 type Repositories struct {
-	Client Client
+	Clients Clients
 }
 
 func NewRepository(db *mongo.Database) *Repositories {
 	return &Repositories{
-		Client: NewClientRepo(db),
+		Clients: NewClientRepo(db),
 	}
 }

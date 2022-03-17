@@ -2,6 +2,7 @@ package http
 
 import (
 	"errors"
+	"fmt"
 	"forms/internal/config"
 	"forms/internal/service"
 	"net/http"
@@ -28,7 +29,7 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 		corsMiddleware,
 	)
 
-	router.GET("/", h.setClientFromRequest)
+	router.POST("/", h.setClientFromRequest)
 
 	return router
 }
@@ -49,7 +50,7 @@ func (h *Handler) setClientFromRequest(c *gin.Context) {
 		c.AbortWithStatusJSON(500, errors.New("Введенные данные некорректны"))
 	}
 
-	_, err := h.services.ClientService.Create(c.Request.Context(), service.ClientInput{
+	id, err := h.services.Clients.Create(c.Request.Context(), service.ClientInput{
 		Firstname:  sc.Firstname,
 		Lastname:   sc.Lastname,
 		Patronomic: sc.Patronymic,
@@ -61,6 +62,7 @@ func (h *Handler) setClientFromRequest(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(500, errors.New("Введенные данные некорректны"))
 	}
+	fmt.Println(id)
 
 	c.Status(http.StatusCreated)
 }

@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"forms/internal/domain"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -20,7 +21,14 @@ func NewClientRepo(db *mongo.Database) *ClientRepo {
 
 func (c *ClientRepo) Create(ctx context.Context, info domain.Client) (primitive.ObjectID, error) {
 	res, err := c.db.InsertOne(ctx, domain.Client{
-		// TODO Добавить время
+		Firstname:  info.Firstname,
+		Lastname:   info.Lastname,
+		Patronomic: info.Patronomic,
+		Position:   info.Position,
+		Company:    info.Company,
+		Phone:      info.Phone,
+		Email:      info.Email,
+		CreateAt:   time.Now(),
 	})
 
 	return res.InsertedID.(primitive.ObjectID), err
