@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"errors"
+	"fmt"
 	"forms/internal/config"
 	delivery "forms/internal/delivery/http"
 	"forms/internal/repository"
@@ -13,12 +14,15 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 )
 
-func Run(configPath string) {
-	cfg, err := config.Init(configPath)
+func Run(configsPath string) {
+	checkDir()
+
+	cfg, err := config.Initial(configsPath)
 	if err != nil {
 		logger.Errorf("не могу подулючиться %v", err)
 		return
@@ -65,4 +69,13 @@ func Run(configPath string) {
 	if err := mongoClient.Disconnect(context.Background()); err != nil {
 		logger.Error(err.Error())
 	}
+}
+
+func checkDir() {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+	fmt.Println(exPath)
 }

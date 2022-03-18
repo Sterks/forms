@@ -13,13 +13,13 @@ const timeout = 10 * time.Second
 
 // NewClient established connection to a mongoDb instance using provided URI and auth credentials.
 func NewClient(uri, username, password string) (*mongo.Client, error) {
-	uri = "mongodb://user:password@127.0.0.1:27017/linkage"
+	// uri = "mongodb://user:password@127.0.0.1:27017/linkage"
 	opts := options.Client().ApplyURI(uri)
-	// if username != "" && password != "" {
-	// 	opts.SetAuth(options.Credential{
-	// 		Username: username, Password: password,
-	// 	})
-	// }
+	if username != "" && password != "" {
+		opts.SetAuth(options.Credential{
+			Username: username, Password: password,
+		})
+	}
 
 	client, err := mongo.NewClient(opts)
 	if err != nil {

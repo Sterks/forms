@@ -31,7 +31,7 @@ type (
 	}
 )
 
-func Init(configDir string) (*Config, error) {
+func Initial(configsDir string) (*Config, error) {
 	var cfg *Config
 	// viper.SetConfigFile("../../configs/main.yml")
 	viper.SetConfigFile("configs/main.yml")

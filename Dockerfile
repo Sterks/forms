@@ -5,10 +5,12 @@ RUN go version
 COPY . /forms/
 WORKDIR /forms
 
-RUN go mod download && go mod tidy && \
-    GOOS=linux go build -o ./.bin/app ./cmd/app/main.go
+RUN go mod download && GOOS=linux go build -o ./.bin/app ./cmd/app/main.go
+RUN ls -la
 
 FROM alpine:latest
+
+RUN ls -la
 
 WORKDIR /root/
 
